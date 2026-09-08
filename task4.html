@@ -1,0 +1,58 @@
+//EX:1 simple login
+<body style="background-color: #5cb85c; text-align: center; padding-top: 100px">
+  <div style="background: white; display: inline-block; padding: 30px">
+    <input type="text" id="user" placeholder="username" /><br /><br />
+    <input type="password" id="pass" placeholder="password" /><br /><br />
+    <button
+      onclick="login()"
+      style="background: #00b33c; color: white; width: 100%"
+    >
+      LOGIN
+    </button>
+    <p id="msg"></p>
+  </div>
+
+  <script>
+    function login() {
+      let data = {
+        u: document.getElementById("user").value,
+        p: document.getElementById("pass").value,
+      };
+
+      let msgBox = document.getElementById("msg");
+
+      if (data.u === "admin" && data.p === "123") {
+        msgBox.innerHTML = "welcome";
+      } else {
+        msgBox.innerHTML = "not registered";
+      }
+    }
+  </script>
+</body>
+//============================================================ //EX :2 Simpel
+array merege
+
+<body style="padding: 20px">
+  <input type="text" id="arr1" placeholder="1,6,5,9,1,2" /><br /><br />
+  <input type="text" id="arr2" placeholder="5,6,3,1,9" /><br /><br />
+  <button onclick="mergeAndFilter()">Merge Arrays</button>
+  <p id="result"></p>
+
+  <script>
+    function mergeAndFilter() {
+      let a1 = document.getElementById("arr1").value.split(",");
+      let a2 = document.getElementById("arr2").value.split(",");
+      let merged = a1.concat(a2);
+
+      let unique = [];
+
+      for (let i = 0; i < merged.length; i++) {
+        if (unique.indexOf(merged[i]) === -1 && merged[i] !== "") {
+          unique.push(merged[i]);
+        }
+      }
+
+      document.getElementById("result").innerHTML = "New Array: " + unique;
+    }
+  </script>
+</body>
