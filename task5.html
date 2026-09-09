@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Lab 5</title>
+  </head>
+  <body>
+    <div
+      style="
+        width: 600px;
+        height: 600px;
+        background: skyblue;
+        position: relative;
+      "
+    >
+      <img id="myImage" src="" style="width: 100%; height: 100%" />
+      <h3
+        id="myTitle"
+        style="
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          text-align: center;
+          color: white;
+          background: black;
+        "
+      >
+        Title
+      </h3>
+    </div>
+
+    <br />
+    <button onclick="prevImage()">&lt;&lt;</button>
+    <button onclick="nextImage()">&gt;&gt;</button>
+    <button onclick="stopSlider()">stop</button>
+    <button onclick="playSlider()">play</button>
+    <button onclick="speed6s()">1x 6s</button>
+    <button onclick="speed4s()">2x 4s</button>
+    <button onclick="speed2s()">3x 2s</button>
+
+    <script>
+      var photos = [];
+      var index = 0;
+      var timer;
+      var speed = 6000;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "https://jsonplaceholder.typicode.com/albums/1/photos");
+      xhr.send();
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          var responseText = xhr.responseText;
+          photos = JSON.parse(responseText);
+          showImage();
+        }
+      };
+
+      function showImage() {
+        document.getElementById("myImage").src = photos[index].url;
+        document.getElementById("myTitle").innerHTML = photos[index].title;
+      }
+
+      function nextImage() {
+        index = index + 1;
+        if (index >= photos.length) {
+          index = 0;
+        }
+        showImage();
+      }
+
+      function prevImage() {
+        index = index - 1;
+        if (index < 0) {
+          index = photos.length - 1;
+        }
+        showImage();
+      }
+
+      function playSlider() {
+        clearInterval(timer);
+        timer = setInterval(nextImage, speed);
+      }
+
+      function stopSlider() {
+        clearInterval(timer);
+      }
+
+      function speed6s() {
+        speed = 6000;
+        playSlider();
+      }
+
+      function speed4s() {
+        speed = 4000;
+        playSlider();
+      }
+
+      function speed2s() {
+        speed = 2000;
+        playSlider();
+      }
+
+      // cookie
+
+      function setCookieValue(cookieName, cookieValue) {
+        document.cookie = cookieName + "=" + cookieValue;
+      }
+
+      function getCookieAsArray() {
+        var myArr = [];
+        var allCookies = document.cookie.split("; ");
+
+        for (var i = 0; i < allCookies.length; i++) {
+          var parts = allCookies[i].split("=");
+          myArr.push(parts);
+        }
+        return myArr;
+      }
+
+      function checkCookieValue(cookieName) {
+        var allCookies = document.cookie.split("; ");
+
+        for (var i = 0; i < allCookies.length; i++) {
+          var parts = allCookies[i].split("=");
+          if (parts[0] == cookieName) {
+            return true;
+          }
+        }
+        return false;
+      }
+    </script>
+  </body>
+</html>
